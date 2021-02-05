@@ -1,30 +1,115 @@
-// Person (is an Entity)
+import {ILocation, IBusiness, IPerson, IAnimal, IVehicle, ITrailer} from './interfaces'
 
-// Family (Groups People, is an Entity)
+//business decision: All farm animals are considered large
+// pets are small animals 
 
-// Farm (is a Location, is a Business)
+class Farm implements ILocation, IBusiness {
+    location:string;
+    businessName:string;
 
-// Business (is an Entity)
-    // has owner
+    largeAnimals:IAnimal[]=[];
 
-// Farm Animal (is an Animal, belongs to a Farm)
+    horseTrailer:ITrailer[]=[];
+    cattleTrailer:ITrailer[]=[];
+    smallTrailer:ITrailer[]=[];
 
-// Pet (is an Animal, has a name, belongs to a person or family)
+    addLargeAnimal( animal:LargeAnimal){
+        this.largeAnimals.push( animal );
+        console.log(this.largeAnimals)
+    }
 
-// Horse (is a Farm Animal, has a name, is a Large Animal)
+    // set (){
+    //     return this.largeAnimals.map(animal => animal.name).push();
+    // }
 
-// Cow (is a Farm Animal, is a Large Animal)
 
-// Dog
+}
 
-// Cat
+class Individual implements IPerson {
 
-// Truck (is a Vehicle, can tow)
+    get name(){
+        return `${this.fname} ${this.lname}`;
+    }
 
-// Car (is a Vehicle, cannot tow)
+    constructor( public fname:string, public lname:string ){
 
-// Horse Trailer (can hold 2 large animals)
+    }
+}
 
-// Cattle Trailer (can hold 20 Large Animals)
+class Family implements IPerson {
+    name: string;
+    familyMembers:IPerson[]=[];
+    pets:IAnimal[]=[];
 
-// Small Trailer (can hold 1 large animal)
+
+    addOwner( member:Individual){
+        this.familyMembers.push( member );
+    }
+
+    addPet( pet:Pet){
+        this.pets.push( pet );
+    }
+
+}
+
+class Car implements IVehicle {
+    brand: string;
+    
+}
+
+class Truck implements IVehicle {
+    brand:string;
+}
+
+class Trailer implements ITrailer {
+    capacity:number;
+    animals:[]
+    isFull() {
+        return false;
+    }
+}
+
+class horseTrailer extends Trailer {
+
+    
+}
+
+class cattleTrailer implements ITrailer {
+    capacity: number
+    animals:IAnimal[]
+    isFull(){
+        return false;
+    }
+}
+
+class smallTrailer implements ITrailer {
+    capacity: number;
+    animals:IAnimal[]
+    isFull(){
+        return false;
+    }
+
+}
+
+class Animal implements IAnimal {
+    species:string;
+    name:string;
+}
+
+class LargeAnimal extends Animal {
+    name = "Large Animal"
+}
+
+class Pet extends Animal {
+
+}
+
+
+
+const HewbiesFarm = new Farm();
+HewbiesFarm.location = "Texas";
+const Horse = new LargeAnimal();
+HewbiesFarm.addLargeAnimal(Horse);
+
+console.log(HewbiesFarm)
+
