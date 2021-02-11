@@ -4,10 +4,19 @@ import {ILocation, IBusiness, IPerson, IAnimal, IVehicle, ITrailer} from './inte
 // pets are small animals 
 
 class Farm implements ILocation, IBusiness {
-    location:string;
-    businessName:string;
+    readonly location:string;
+    public businessName:string;
 
-    largeAnimals:IAnimal[]=[];
+    constructor (location:string){
+        this.location = location;
+    }
+
+    private largeAnimals:IAnimal[]=[];
+
+    //assignment
+    getLargeAnimals(){
+        return this.largeAnimals;
+    }
 
     horseTrailer:ITrailer[]=[];
     cattleTrailer:ITrailer[]=[];
@@ -74,6 +83,7 @@ class horseTrailer extends Trailer {
     
 }
 
+// cattleTrailer and smallTrailer can use abstraction
 class cattleTrailer implements ITrailer {
     capacity: number
     animals:IAnimal[]
@@ -82,6 +92,7 @@ class cattleTrailer implements ITrailer {
     }
 }
 
+// cattleTrailer and smallTrailer can use abstraction
 class smallTrailer implements ITrailer {
     capacity: number;
     animals:IAnimal[]
@@ -106,8 +117,7 @@ class Pet extends Animal {
 
 
 
-const HewbiesFarm = new Farm();
-HewbiesFarm.location = "Texas";
+const HewbiesFarm = new Farm("Texas");
 const Horse = new LargeAnimal();
 HewbiesFarm.addLargeAnimal(Horse);
 
